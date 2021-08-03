@@ -310,7 +310,7 @@ globalkeys = my_table.join(
     -- dmenu
     awful.key({ modkey, "Shift" }, "d",
     function ()
-        awful.util.spawn("dmenu_run")
+        awful.util.spawn("dmenu_run -h 30")
 	end,
     {description = "show dmenu", group = "hotkeys"}),
 
@@ -457,6 +457,13 @@ globalkeys = my_table.join(
 
     -- Personal keybindings}}}
 
+    --Volume
+    awful.key({ }, "#122", function () awful.util.spawn("amixer -D pulse sset Master 5%-") end),
+    awful.key({ }, "#123", function () awful.util.spawn("amixer -D pulse sset Master 5%+") end),
+
+    --Brightness
+    awful.key({ }, "#232", function () awful.util.spawn("light -U 5") end),
+    awful.key({ }, "#233", function () awful.util.spawn("light -A 5") end),
 
     -- Hotkeys Awesome
 
