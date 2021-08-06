@@ -16,7 +16,7 @@ local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/powerarrow"
-theme.wallpaper                                 = theme.dir .. "/wallpaper.jpg"
+-- theme.wallpaper                                 = theme.dir .. "/wallpaper.jpg"
 theme.font                                      = "mononoki Nerd Font 14"
 theme.taglist_font                              = "mononoki Nerd Font 16"
 theme.fg_normal                                 = "#FEFEFE"
@@ -346,11 +346,11 @@ function theme.at_screen_connect(s)
 
 
     -- If wallpaper is a function, call it with the screen
-    local wallpaper = theme.wallpaper
-    if type(wallpaper) == "function" then
-        wallpaper = wallpaper(s)
-    end
-    gears.wallpaper.maximized(wallpaper, s, true)
+    -- local wallpaper = theme.wallpaper
+    -- if type(wallpaper) == "function" then
+    --     wallpaper = wallpaper(s)
+    -- end
+    -- gears.wallpaper.maximized(wallpaper, s, true)
 
     -- All tags open with layout 1
     awful.tag(awful.util.tagnames, s, awful.layout.layouts[1])
@@ -372,7 +372,7 @@ function theme.at_screen_connect(s)
     --s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(32), bg = theme.bg_normal, fg = theme.fg_normal })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(35), bg = theme.bg_normal, fg = theme.fg_normal, opacity = 0.9 })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -387,7 +387,7 @@ function theme.at_screen_connect(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.widget.systray(),
+           
             --[[ using shapes
             pl(wibox.widget { mpdicon, theme.mpd.widget, layout = wibox.layout.align.horizontal }, "#343434"),
             pl(task, "#343434"),
@@ -423,6 +423,7 @@ function theme.at_screen_connect(s)
             wibox.container.background(wibox.container.margin(clock, dpi(4), dpi(8)), "#777E76"),
             arrow("#777E76", "alpha"),
             --]]
+            wibox.widget.systray(),
             s.mylayoutbox,
         },
     }
