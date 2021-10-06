@@ -1,10 +1,3 @@
---[[
-
-     Multicolor Awesome WM theme 2.0
-     github.com/lcpz
-
---]]
-
 local gears = require("gears")
 local lain  = require("lain")
 local awful = require("awful")
@@ -16,17 +9,15 @@ local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local theme                                     = {}
 theme.confdir                                   = os.getenv("HOME") .. "/.config/awesome/themes/multicolor"
---theme.wallpaper                                 = theme.confdir .. "/wallpaper.jpg"
---theme.wallpaper                                 = "/usr/share/backgrounds/arcolinux/arco-wallpaper.jpg"
-theme.font                                      = "Noto Sans Regular 11"
-theme.taglist_font                              = "Noto Sans Regular 13"
-theme.menu_bg_normal                            = "#000000"
-theme.menu_bg_focus                             = "#000000"
-theme.bg_normal                                 = "#000000"
-theme.bg_focus                                  = "#000000"
-theme.bg_urgent                                 = "#000000"
+theme.font                                      = "Hack Nerd Font 16"
+theme.taglist_font                              = "Hack Nerd Font 15"
+theme.menu_bg_normal                            = "#0F0F0F"
+theme.menu_bg_focus                             = "#0F0F0F"
+theme.bg_normal                                 = "#0F0F0F"
+theme.bg_focus                                  = "#0F0F0F"
+theme.bg_urgent                                 = "#0F0F0F"
 theme.fg_normal                                 = "#aaaaaa"
-theme.fg_focus                                  = "#ff8c00"
+theme.fg_focus                                  = "#1d81de"
 theme.fg_urgent                                 = "#af1d18"
 theme.fg_minimize                               = "#ffffff"
 theme.border_width                              = dpi(2)
@@ -101,14 +92,16 @@ local markup = lain.util.markup
 -- Textclock
 os.setlocale(os.getenv("LANG")) -- to localize the clock
 local clockicon = wibox.widget.imagebox(theme.widget_clock)
-local mytextclock = wibox.widget.textclock(markup("#7788af", "%A %d %B ") .. markup("#535f7a", ">") .. markup("#de5e1e", " %H:%M "))
+local mytextclock = wibox.widget.textclock(markup("#7788af", "%A %d %B ") .. markup("#535f7a", ">") .. markup("#de5e1e", " %l:%M %p "))
 mytextclock.font = theme.font
+
+
 
 -- Calendar
 theme.cal = lain.widget.cal({
     attach_to = { mytextclock },
     notification_preset = {
-        font = "Noto Sans Mono Medium 10",
+        font = "Hack Nerd Font 10",
         fg   = theme.fg_normal,
         bg   = theme.bg_normal
     }
@@ -293,10 +286,23 @@ function theme.at_screen_connect(s)
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons)
 
     -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
+    --s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
+
+
+
+    s.mytasklist = awful.widget.tasklist {
+	    screen   = s,
+	    filter   = awful.widget.tasklist.filter.currenttags,
+	    buttons  = tasklist_buttons,
+	    style    = {
+		    shape_border_width = 1,
+		    shape_border_color = '#777777',
+	    }
+    }
+
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(20), bg = theme.bg_normal, fg = theme.fg_normal })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(35), bg = theme.bg_normal, fg = theme.fg_normal })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -308,7 +314,10 @@ function theme.at_screen_connect(s)
             s.mypromptbox,
         },
         --s.mytasklist, -- Middle widget
-        nil,
+	{
+            layout = wibox.layout.align.horizontal,
+            s.mytasklist, 
+	},
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             --mailicon,
@@ -338,21 +347,6 @@ function theme.at_screen_connect(s)
         },
     }
 
-    -- Create the bottom wibox
-    s.mybottomwibox = awful.wibar({ position = "bottom", screen = s, border_width = 0, height = dpi(20), bg = theme.bg_normal, fg = theme.fg_normal })
-
-    -- Add widgets to the bottom wibox
-    s.mybottomwibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-        },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            s.mylayoutbox,
-        },
-    }
 end
 
 return theme

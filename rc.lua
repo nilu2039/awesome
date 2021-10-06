@@ -71,7 +71,6 @@ end
 -- }}}
 
 
-
 -- {{{ Autostart windowless processes
 local function run_once(cmd_arr)
     for _, cmd in ipairs(cmd_arr) do
@@ -104,7 +103,7 @@ local themes = {
 }
 
 -- choose your theme here
-local chosen_theme = themes[2]
+local chosen_theme = themes[1]
 
 local theme_path = string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme)
 beautiful.init(theme_path)
@@ -129,36 +128,13 @@ local virtualmachine    = "virtualbox"
 
 -- awesome variables
 awful.util.terminal = terminal 
-awful.util.tagnames = { "  |", "  |", "  |", "  |", "  |", "  |", "  |"}
---awful.util.tagnames = { "⠐", "⠡", "⠲", "⠵", "⠻", "⠿" }
---awful.util.tagnames = { "⌘", "♐", "⌥", "ℵ" }
---awful.util.tagnames = { "www", "edit", "gimp", "inkscape", "music" }
--- Use this : https://fontawesome.com/cheatsheet
---awful.util.tagnames = { "", "", "", "", "" }
+--awful.util.tagnames = { "  |", "  |", "  |", "  |", "  |", "  |", "  |"}
+awful.util.tagnames = { "[1] ", "[2] ", "[3] ", "[4] ", "[5] ", "[6] ", "[7] "}
+
 awful.layout.suit.tile.left.mirror = true
 awful.layout.layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.floating,
-    -- awful.layout.suit.tile.left,
-    -- awful.layout.suit.tile.bottom,
-    -- awful.layout.suit.tile.top,
-    -- --awful.layout.suit.fair,
-    -- --awful.layout.suit.fair.horizontal,
-    -- --awful.layout.suit.spiral,
-    -- --awful.layout.suit.spiral.dwindle,
-    -- awful.layout.suit.max,
-    -- --awful.layout.suit.max.fullscreen,
-    -- awful.layout.suit.magnifier,
-    --awful.layout.suit.corner.nw,
-    --awful.layout.suit.corner.ne,
-    --awful.layout.suit.corner.sw,
-    --awful.layout.suit.corner.se,
-    --lain.layout.cascade,
-    --lain.layout.cascade.tile,
-    --lain.layout.centerwork,
-    --lain.layout.centerwork.horizontal,
-    --lain.layout.termfair,
-    --lain.layout.termfair.center,
 }
 
 awful.util.taglist_buttons = my_table.join(
@@ -1159,4 +1135,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Autostart applications
 awful.spawn.with_shell("~/.config/awesome/autostart.sh")
-awful.spawn.with_shell("picom -b --config  $HOME/.config/awesome/picom.conf")
+--awful.spawn.with_shell("picom -b --config  $HOME/.config/picom.conf")
